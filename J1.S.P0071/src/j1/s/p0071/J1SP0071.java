@@ -21,15 +21,22 @@ public class J1SP0071 {
         Managing m = new Managing(tasks);
         while (true) {
             switch (m.welcome()) {
-                case 1:m.addtask();
+                case 1:
+                    m.addtask();
                     break;
-                case 2:m.updateTask();
+                case 2:
+                    m.updateTask();
                     break;
-                case 3:m.deleteTask();
+                case 3:
+                    m.deleteTask();
                     break;
-                case 4:m.getDataTasks();
+                case 4:
+                    m.getDataTasks();
                     break;
                 case 5:
+                    return;
+
+                default:
                     return;
             }
         }

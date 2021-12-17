@@ -93,14 +93,14 @@ public class Managing {
         String reviewer= val.checkInputString("Reviewer:");
         
         Task task = val.isIdExists(tasks, id);
+        task.setRequirementName(name);
+        task.setTaskTypeId(tasktype);
+        task.setDate(date);
+        task.setPlanFrom(from);
+        task.setPlanTo(to);
+        task.setAssignee(assignee);
+        task.setReviewer(reviewer);
         
-        if(!name.equalsIgnoreCase("nope")) task.setRequirementName(name);
-        if(tasktype==-1) task.setTaskTypeId(tasktype);
-        if(date.equalsIgnoreCase("nope")) task.setDate(date);
-        if(from==-1) task.setPlanFrom(from);
-        if(to==-1) task.setPlanTo(to);
-        if(!assignee.equalsIgnoreCase("nope")) task.setAssignee(assignee);
-        if(!reviewer.equalsIgnoreCase(assignee)) task.setReviewer(reviewer);
         }
         
         

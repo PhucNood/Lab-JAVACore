@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package j1.s.p0071;
+package controler;
 
+import model.Task;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,10 +19,15 @@ import java.util.Scanner;
 public class Validation {
 
     private Scanner sc = new Scanner(System.in);
+    public static final int UpdateMode = 1;
+    public static final int NormalMode = 0;
+    public static final int notChange = -1;
+    public static final String unChange = "No";
 
     public String checkInputString(String mess) {
-        System.out.print(mess);
+
         while (true) {
+            System.out.print(mess);
             String result = sc.nextLine().trim();
             if (result.isEmpty()) {
                 System.err.println("Not empty.");
@@ -32,35 +38,52 @@ public class Validation {
         }
     }
 
-    public int checkInt(String mess, int min, int max) {
+    public int checkInt(String mess, int min, int max, int mode) {
         int result;
-        System.out.print(mess);
-        while (true) {
+        String input;
 
+        while (true) {
+            System.out.print(mess);
             try {
-                result = Integer.parseInt(sc.nextLine().trim());
-                if (result >= min && result <= max) {
-                    break;
-                } else {
-                    System.err.print("Out of range! please enter in range "
-                            + "[" + min + "," + max + "]: ");
+                input = sc.nextLine().trim();
+                if (mode == UpdateMode) {
+                    if (input.equalsIgnoreCase("nope")) {
+                        return notChange;
+                    }
+
                 }
-            } catch (NumberFormatException e) {
-                System.err.print("Must enter a real number from 8-17.5: ");
+                result = Integer.parseInt(input);
+                if (result >= min && result <= max) {
+                    return result;
+                } else {
+                     System.out.println("Between " + min + " and " + max + ",Please!");
+                   
+                }
+
+            } catch (Exception e) {
+                System.out.println("Number format please!!");
             }
 
         }
-        return result;
+
     }
 
-    public String checkDate(String mess) {
+    public String checkDate(String mess, int mode) {
         System.out.print(mess);
         SimpleDateFormat formatIn = new SimpleDateFormat("dd-MM-yyyy");
         formatIn.setLenient(false);
+        String input;
         while (true) {
+            input = sc.nextLine().trim();
+            if (mode == UpdateMode) {
+                if (input.equalsIgnoreCase("nope")) {
+                    return unChange;
+                }
+
+            }
             try {
 
-                Date date = formatIn.parse(sc.nextLine().trim());
+                Date date = formatIn.parse(input);
                 SimpleDateFormat formatOut = new SimpleDateFormat("dd-MM-yyyy");
                 String strDate = formatOut.format(date);
                 return strDate;
@@ -68,39 +91,50 @@ public class Validation {
             } catch (ParseException e) {
                 System.out.print("Please input valid date (dd-MM-yyyy): ");
             }
+
         }
+
     }
 
-    public double checkDouble(String mess, double min, double max) {
+    public double checkDouble(String mess, double min, double max, int mode) {
         double result;
-        System.out.print(mess);
-        while (true) {
-            try {
+        String input;
 
-                result = Double.parseDouble(sc.nextLine().trim());
+        while (true) {
+            System.out.print(mess);
+            input = sc.nextLine().trim();
+            if (mode == UpdateMode) {
+                if (input.equalsIgnoreCase("nope")) {
+                    return notChange;
+                }
+
+            }
+            try {
+                result = Double.parseDouble(input);
                 if (result >= min && result <= max) {
-                    break;
+                    return result;
                 } else {
-                    System.err.println("Between " + min + " and " + max + ".");
-                    System.out.print("Try again: ");
+                    System.out.println("Between " + min + " and " + max + ",Please!");
+
                 }
 
             } catch (NumberFormatException e) {
 
                 System.err.print("Must enter a real number from 8-17.5: ");
             }
+
         }
-        return result;
+
     }
 
-    public double checkTime(String mess) {
+    public double checkTime(String mess, int mode) {
         while (true) {
-            double time = checkDouble(mess, 8, 17.5);
+            double time = checkDouble(mess, 8, 17.5, mode);
             if (time % 0.5 == 0) {
                 return time;
-            } else {
-                System.err.println("tithes mustm be 0 or 5");
             }
+            System.err.println("tithes mustm be 0 or 5");
+
         }
     }
 
