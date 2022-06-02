@@ -13,8 +13,8 @@ import java.util.Scanner;
  * @author ACER
  */
 public class Validation {
-      private  Scanner sc = new Scanner(System.in);
-   
+      private final  Scanner sc = new Scanner(System.in);
+      
    
 
     
@@ -63,14 +63,16 @@ public class Validation {
         }
     }
 
-    public void checkPass(ResourceBundle rb) {
-        String length = "[a-zA-Z0-9]{8,31}"; 
-        String digit = "[0-9a-zA-Z]*[0-9]+[0-9a-zA-Z]*";  
-        String alphabet ="[0-9a-zA-Z]*[a-zA-Z]+[0-9a-zA-Z]*"; 
+    public void checkPass(ResourceBundle rb) { // * = {0,1} ;+ = {1,} aka 1 to many
+//        String length = "[a-zA-Z0-9]{8,31}"; // must alphanumberic length 8-31 character
+//        String digit = "[0-9a-zA-Z]*[0-9]+[0-9a-zA-Z]*";   // must exist at least 1 digit in String
+//        String alphabet ="[0-9a-zA-Z]*[a-zA-Z]+[0-9a-zA-Z]*"; //must exist at least 1 alphabet in String
+String regex = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@%#&()–[{}]:;',?/*~$^+=<>]).{8,32}$"; // ?= (Positive Look ahead)
+
         while (true) {
             System.out.print(rb.getString("password"));
             String pass = checkInputString();
-            if (pass.matches(length)&&pass.matches(digit)&&pass.matches(alphabet)) {
+            if (pass.matches(regex)) {
                 break;
             } else {
                 System.err.println(rb.getString("wrong.password"));

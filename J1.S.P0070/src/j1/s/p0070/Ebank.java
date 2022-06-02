@@ -5,6 +5,7 @@
  */
 package j1.s.p0070;
 
+import java.util.Locale;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -14,7 +15,32 @@ import java.util.ResourceBundle;
  */
 public class Ebank {
      Validation val = new Validation();
-    public int menu() {
+
+    public Ebank() {
+         while(true){
+            int choice = menu();
+                    switch (choice) {
+            case 1: {
+               Locale vi_Locale = new Locale("viet", "VN"); // create you defination locate by your property file
+                ResourceBundle vi_bundle = ResourceBundle.getBundle("j1.s.p0070/language", vi_Locale);
+                login(vi_bundle);
+                break;
+            }
+            case 2: {
+              Locale en_Locale = new Locale("eng", "US");
+                ResourceBundle en_bundle = ResourceBundle.getBundle("j1.s.p0070/language", en_Locale);
+                login(en_bundle);
+                break;
+            }
+            case 3:return;
+        }
+                    
+        }
+    }
+     
+     
+     
+    private int menu() {
         System.out.println("1. Vietnamese");
         System.out.println("2. English");
         System.out.println("3. Exit");
@@ -22,7 +48,7 @@ public class Ebank {
         return choice;
     }
 
-    public String CreateCaptcha() {
+    private String CreateCaptcha() {
         String root = "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
         Random r = new Random();
         String captcha = "";
@@ -33,7 +59,7 @@ public class Ebank {
         return captcha;
     }
 
-    public void login(ResourceBundle rb) {
+    private void login(ResourceBundle rb) {
         val.checkAccNumber(rb);
         val.checkPass(rb);
         val.checkCaptcha(rb, CreateCaptcha());
